@@ -19,6 +19,10 @@ findOneDocument(filters={}){
 findOneAndUpdateDocument(filters,updates,options){
     return this.model.findOneAndUpdate(filters,updates,options)
 }
+updateDocument(_id,data,options){
+
+    return this.model.updateOne({ _id }, { $set: data }, options)
+}
 
 
 }

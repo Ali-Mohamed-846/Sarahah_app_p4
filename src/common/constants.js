@@ -12,3 +12,7 @@ export const tokenTypeEnum = {
     ACCESS_TOKEN: 'access_token',
     REFRESH_TOKEN: 'refresh_token'
 }
+export const providersEnum = {
+    SYSTEM: 'System',
+    GOOGLE: 'GOOGLE'
+}

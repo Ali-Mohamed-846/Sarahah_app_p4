@@ -28,5 +28,11 @@ const envConfig = {
         }
     
     },
+    GCP:{
+        client_id : process.env.GCP_CLIENT_ID
+    },
+    redis:{
+        url :process.env.REDIS_CLOUD_URL
+    }
 }
 export default envConfig

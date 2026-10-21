@@ -5,10 +5,12 @@ import routerAuth from "./modules/auth/auth.controller.js"
 import routerUsers from "./modules/users/users.controller.js"
 import routerMessage from "./modules/message/message.controller.js"
 import { globalErrorHandler } from "./Middlewares/global-error-handler.middleware.js";
-
+import { redisConnection } from "./common/Clients/redis.client.js";
+import cors from 'cors'
 const app = express()
 dbConnection()
-app.use(express.json())
+redisConnection()
+app.use(cors(),express.json())
 
 app.use('/api/auth/',routerAuth)
 app.use('/api/users/',routerUsers)

@@ -13,9 +13,10 @@ export const authenticate = async (req, res, next) => {
     if (prefix !== 'Bearer' || !token) {
         throw new BadRequestException('Invalid authorization header format', null, 'UNAUTHORIZED')
     }
-    const user = await decodeToken({ token, tokentype :tokenTypeEnum.ACCESS_TOKEN})
+    const {user , tokenData} = await decodeToken({ token, tokentype :tokenTypeEnum.ACCESS_TOKEN})
 
     req.authUser = user
+    req.accessTokenData =tokenData
 
     next()
 }

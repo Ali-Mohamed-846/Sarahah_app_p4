@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { genderEnum, roleEnum } from "../../common/constants.js";
+import { genderEnum, providersEnum, roleEnum } from "../../common/constants.js";
 
 
 const userSchema = new mongoose.Schema({
@@ -47,6 +47,19 @@ role: {
     type:String,
     enum:Object.values(roleEnum),
     default:roleEnum.USER
+},
+googleSub:{
+type: String,
+index:{
+    name : "idx_google_sun_unique",
+    unique:true
+    
+}
+},
+provider: {
+    type:String,
+    enum:Object.values(providersEnum),
+    default:providersEnum.SYSTEM
 }
 
 }

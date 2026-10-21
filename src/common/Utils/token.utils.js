@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken"
-import { BadRequestException, NotFoundException } from "./Errors/exception.error.js"
+import { BadRequestException, NotFoundException, UNauthorizedException } from "./Errors/exception.error.js"
 import UserRepository from "../../DB/Repositories/user.repository.js"
 import { tokenTypeEnum } from "../constants.js"
 import envConfig from "../../../config/config.js"
+import { get } from "../Services/redis.services.js"
 
 const userRepo = new UserRepository()
 
@@ -37,11 +38,16 @@ console.log("ACCESS_TOKEN:", tokenTypeEnum.ACCESS_TOKEN);
     }
 
     const decodedData = verifyToken(token, signature)
+const isTokenBlackListed = await get(`bl_${tokentype}_${decodedData.jti}`);
+
+if (isTokenBlackListed) {
+  throw new UNauthorizedException( 'This token is revoked try to re-login', null, 'UNAUTHORIZED' );
+}
 
     const user = await userRepo.findDocumentById(decodedData._id)
     if (!user) {
         throw new NotFoundException("no user found")
     }
 
-    return user
+    return{user , tokenData:decodedData}
 }
